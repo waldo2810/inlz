@@ -11,7 +11,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { projects } from "@/db";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -31,7 +30,7 @@ export default function CreateProjectForm() {
   });
 
   function onSubmit(data: z.infer<typeof schema>) {
-    console.log(projects);
+    console.log(data);
   }
 
   return (
