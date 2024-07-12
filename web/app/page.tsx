@@ -1,19 +1,23 @@
-import CreateProjectButton from "./components/create-project-button";
-import ProjectList from "./components/project-list";
-import { getProjects } from "@/actions/projects/get";
+import { useUser } from "@/hooks/useUser";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default async function Home() {
-  const projects = await getProjects();
+export default async function Index() {
+  const session: any = useUser();
 
+  if (!session.user) {
+    redirect("/login");
+  }
   return (
-    <main className="flex min-h-screen flex-col p-24">
-      <div className="flex justify-between">
-        <h2 className="text-xl font-semibold">My Projects</h2>
-
-        <CreateProjectButton />
-      </div>
-
-      <ProjectList projects={projects} />
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      <h1>Projects & Tasks</h1>
+      <p>Welcome back, {session.user.name}.</p>
+      <Link
+        href="/home"
+        className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+      >
+        Go to home
+      </Link>
     </main>
   );
 }
