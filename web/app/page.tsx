@@ -1,23 +1,21 @@
-import { useUser } from "@/hooks/useUser";
+import { Button } from "@/components/ui/button";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Index() {
-  const session: any = useUser();
+  const token = cookies().get("access_token");
 
-  if (!session.user) {
+  if (!token) {
     redirect("/login");
   }
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1>Projects & Tasks</h1>
-      <p>Welcome back, {session.user.name}.</p>
-      <Link
-        href="/home"
-        className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-      >
-        Go to home
-      </Link>
+    <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-24">
+      <h1 className="text-2xl font-bold">Projects & Tasks</h1>
+      <p>Welcome back</p>
+      <Button variant="ghost">
+        <Link href="/home">Go to home</Link>
+      </Button>
     </main>
   );
 }

@@ -29,6 +29,15 @@ export class UserService {
     }
   }
 
+  async findOneByEmailNoValidate(email: string) {
+    const result = await this.dbService.db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.email, email));
+    const user = result[0];
+    return user as User;
+  }
+
   async findOneById(id: string): Promise<User> {
     try {
       const result = await this.dbService.db
