@@ -23,8 +23,18 @@ export const tasksTable = sqliteTable('tasks', {
   ),
 });
 
+export const usersTable = sqliteTable('users', {
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').unique().notNull(),
+  password: text('password').notNull(),
+});
+
 export type InsertProject = typeof projectsTable.$inferInsert;
 export type SelectProject = typeof projectsTable.$inferSelect;
 
 export type InsertTask = typeof tasksTable.$inferInsert;
 export type SelectTask = typeof tasksTable.$inferSelect;
+
+export type InsertUser = typeof usersTable.$inferInsert;
+export type SelectUser = typeof usersTable.$inferSelect;
