@@ -13,7 +13,7 @@ export default async function Home() {
         <CreateProjectButton />
       </div>
 
-      {projects.length > 0 ? (
+      {!("error" in projects) && projects.length > 0 ? (
         <ProjectList projects={projects} />
       ) : (
         <div className="h-full my-auto flex items-center justify-center text-sm">
