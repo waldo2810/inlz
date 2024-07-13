@@ -59,6 +59,10 @@ export function TaskInfo({ task }: { task: Task }) {
 
   return (
     <div className="flex items-center gap-3">
+      <p className="text-xs text-gray-700 font-medium">
+        Due: {new Date(task.dueDate).toLocaleDateString()}
+      </p>
+
       <Select onValueChange={handleTaskStatusUpdate}>
         <SelectTrigger className="w-[150px]">
           <SelectValue placeholder={getStatus(task.status)} />
