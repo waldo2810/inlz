@@ -15,6 +15,7 @@ export const tasksTable = sqliteTable('tasks', {
   title: text('title').notNull(),
   description: text('description').notNull(),
   dueDate: text('due_date').notNull(),
+  status: text('status').notNull(),
   projectId: text('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),

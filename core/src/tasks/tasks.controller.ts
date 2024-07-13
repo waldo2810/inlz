@@ -25,6 +25,11 @@ export class TasksController {
     return await this.taskService.createTask(user, projectId, task);
   }
 
+  @Put('status')
+  async Task(@Query('taskId') taskId: string, @Query('status') status: string) {
+    return await this.taskService.updateStatus(taskId, status);
+  }
+
   @Put()
   async updateTask(@Body() task: UpdateTaskDto) {
     return await this.taskService.updateTask(task);

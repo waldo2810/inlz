@@ -32,11 +32,30 @@ export class TasksService {
       ...task,
       id: randomUUID(),
       projectId,
+      status: 'TODO',
     };
     return await this.dbService.db
       .insert(tasksTable)
       .values(taskToSave)
       .returning();
+  }
+
+  async updateStatus(taskId: string, status: string) {
+    try {
+      const foundTask = await this.dbService.db
+        .select()
+        .from(tasksTable)
+        .where(eq(tasksTable.id, taskId));
+
+      if (!foundTask) throw new NotFoundException('Task does not exist');
+      return await this.dbService.db
+        .update(tasksTable)
+        .set({ status })
+        .where(eq(tasksTable.id, taskId))
+        .returning();
+    } catch (e) {
+      throw e;
+    }
   }
 
   async updateTask(task: UpdateTaskDto) {
