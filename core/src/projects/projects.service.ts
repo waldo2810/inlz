@@ -4,6 +4,7 @@ import { DatabaseService } from 'src/database/database.service';
 import { InsertProject, projectsTable } from 'src/database/schema';
 import { UserService } from 'src/user/user.service';
 import { CreateProjectDto } from './dto/create-project.dto';
+import { eq } from 'drizzle-orm';
 
 @Injectable()
 export class ProjectsService {
@@ -12,8 +13,12 @@ export class ProjectsService {
     private userService: UserService,
   ) {}
 
-  async getProjects() {
-    return await this.dbService.db.select().from(projectsTable);
+  async getProjects(user: AccessTokenDecoded) {
+    const { id: userId } = await this.userService.findOneByEmail(user.email);
+    return await this.dbService.db
+      .select()
+      .from(projectsTable)
+      .where(eq(projectsTable.userId, userId));
   }
 
   async createProject(user: AccessTokenDecoded, project: CreateProjectDto) {

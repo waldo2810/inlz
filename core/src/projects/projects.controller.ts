@@ -8,8 +8,8 @@ export class ProjectsController {
   constructor(private projectsService: ProjectsService) {}
 
   @Get()
-  async getProjects() {
-    return this.projectsService.getProjects();
+  async getProjects(@User() userInfo: AccessTokenDecoded) {
+    return this.projectsService.getProjects(userInfo);
   }
 
   @Post()
