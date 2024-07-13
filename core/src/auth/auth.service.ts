@@ -38,4 +38,12 @@ export class AuthService {
     await this.userService.create(newUser);
     return this.login(newUser);
   }
+
+  async decode(token: string): Promise<AccessTokenDecoded> {
+    try {
+      return this.jwtService.decode(token);
+    } catch (e) {
+      throw new BadRequestException('Invalid token');
+    }
+  }
 }
