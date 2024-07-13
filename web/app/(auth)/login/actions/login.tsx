@@ -13,11 +13,11 @@ export async function loginUser(userData: z.infer<typeof schema>) {
   });
   if (!res.ok) {
     const error = await res.json();
-    return error as LoginUserError;
+    return error as ApiResponseError;
   }
   const data: LoginUserResponse = await res.json();
   const access_token = data.access_token;
 
   cookies().set("access_token", access_token);
-  redirect("/home");
+  redirect("/");
 }

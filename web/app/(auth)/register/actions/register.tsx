@@ -13,11 +13,11 @@ export async function registerUser(userData: z.infer<typeof schema>) {
   });
   if (!res.ok) {
     const error = await res.json();
-    return error as RegisterUserError;
+    return error as ApiResponseError;
   }
   const data: RegisterUserResponse = await res.json();
   const access_token = data.access_token;
 
   cookies().set("access_token", access_token);
-  redirect("/home");
+  redirect("/");
 }

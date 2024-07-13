@@ -14,7 +14,6 @@ type ProjectListProps = {
 };
 
 export default function ProjectList({ projects }: ProjectListProps) {
-  console.log(projects);
   return (
     <div>
       {projects.map((project: Project) => (

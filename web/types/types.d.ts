@@ -10,3 +10,9 @@ type DecodedTokenResponse = {
   iat: number;
   exp: number;
 };
+
+type ApiResponseError = {
+  message: string;
+  error: string;
+  statusCode: number;
+};
