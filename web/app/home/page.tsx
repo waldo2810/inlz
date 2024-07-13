@@ -1,6 +1,6 @@
+import { getProjects } from "./actions/get-projects";
 import CreateProjectButton from "./components/create-project-button";
 import ProjectList from "./components/project-list";
-import { getProjects } from "@/actions/projects/get";
 
 export default async function Home() {
   const projects = await getProjects();
@@ -13,7 +13,13 @@ export default async function Home() {
         <CreateProjectButton />
       </div>
 
-      <ProjectList projects={projects} />
+      {projects.length > 0 ? (
+        <ProjectList projects={projects} />
+      ) : (
+        <div className="h-full my-auto flex items-center justify-center text-sm">
+          <span>No projects yet, add some!</span>
+        </div>
+      )}
     </main>
   );
 }

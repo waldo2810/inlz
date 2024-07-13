@@ -14,11 +14,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-
-const schema: z.ZodType<Project> = z.object({
-  name: z.string().min(1, { message: "This is required" }),
-  description: z.string().optional(),
-});
+import { schema } from "../schema";
 
 export default function CreateProjectForm() {
   const form = useForm<z.infer<typeof schema>>({
@@ -48,7 +44,7 @@ export default function CreateProjectForm() {
               <FormControl>
                 <Input placeholder="My project" {...field} />
               </FormControl>
-              <FormDescription>Project's name.</FormDescription>
+              <FormDescription>Project&apos;s name.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
