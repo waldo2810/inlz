@@ -13,12 +13,12 @@ export class ProjectsController {
     @Param() params: { id: string },
   ) {
     const id = params.id;
-    return this.projectsService.getProjectById(userInfo, id);
+    return await this.projectsService.getProjectById(userInfo, id);
   }
 
   @Get()
   async getProjects(@User() userInfo: AccessTokenDecoded) {
-    return this.projectsService.getProjects(userInfo);
+    return await this.projectsService.getProjects(userInfo);
   }
 
   @Post()
@@ -26,6 +26,6 @@ export class ProjectsController {
     @User() userInfo: AccessTokenDecoded,
     @Body() project: CreateProjectDto,
   ) {
-    return this.projectsService.createProject(userInfo, project);
+    return await this.projectsService.createProject(userInfo, project);
   }
 }

@@ -1,4 +1,8 @@
+import { Suspense } from "react";
 import { getProjectById } from "./actions/get-project-by-id";
+import { ProjectHeader } from "./components/project-header";
+import { ProjectTasks } from "./components/project-tasks";
+import { Spinner } from "@/components/ui/spinner";
 
 export default async function ProjectPage({
   params,
@@ -7,11 +11,11 @@ export default async function ProjectPage({
 }) {
   const project: Project = await getProjectById(params.projectId);
   return (
-    <div className="w-[90%] md:w-[60%] mx-auto py-5">
-      <div className="flex flex-col gap-2">
-        <h3 className="text-2xl font-semibold">{project.name}</h3>
-        <p>{project.description}</p>
-      </div>
+    <div>
+      <ProjectHeader project={project} />
+      <Suspense fallback={<Spinner />}>
+        <ProjectTasks project={project} />
+      </Suspense>
     </div>
   );
 }

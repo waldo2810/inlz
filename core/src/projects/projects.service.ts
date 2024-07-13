@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { and, eq } from 'drizzle-orm';
 import { DatabaseService } from 'src/database/database.service';
@@ -18,12 +18,20 @@ export class ProjectsService {
   ) {}
 
   async getProjectById(user: AccessTokenDecoded, id: string) {
-    const { id: userId } = await this.userService.findOneByEmail(user.email);
-    const result = await this.dbService.db
-      .select()
-      .from(projectsTable)
-      .where(and(eq(projectsTable.id, id), eq(projectsTable.userId, userId)));
-    return result[0] as SelectProject;
+    try {
+      const { id: userId } = await this.userService.findOneByEmail(user.email);
+      const result = await this.dbService.db
+        .select()
+        .from(projectsTable)
+        .where(and(eq(projectsTable.id, id), eq(projectsTable.userId, userId)));
+      const project = result[0] as SelectProject;
+      if (!project) {
+        throw new BadRequestException("Project doesn't exist");
+      }
+      return project;
+    } catch (e) {
+      throw e;
+    }
   }
 
   async getProjects(user: AccessTokenDecoded) {

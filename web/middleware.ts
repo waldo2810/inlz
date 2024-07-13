@@ -21,10 +21,6 @@ export async function middleware(request: NextRequest) {
   }
 
   const decodedToken = await response.json();
-  console.log({
-    exp: new Date(decodedToken.exp * 1000).toLocaleString(),
-    now: new Date(Date.now()).toLocaleString(),
-  });
 
   if (decodedToken.exp * 1000 < Date.now()) {
     if (request.nextUrl.pathname !== "/login") {

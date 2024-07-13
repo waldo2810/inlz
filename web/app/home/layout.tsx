@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import Logo from "./components/logo";
 import SignOutButton from "./components/sign-out-button";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function HomeLayout({
   children,
@@ -12,7 +14,7 @@ export default function HomeLayout({
         <Logo />
         <SignOutButton />
       </nav>
-      {children}
+      <Suspense fallback={<Spinner />}>{children}</Suspense>
     </div>
   );
 }
