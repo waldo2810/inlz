@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
+import { and, eq } from 'drizzle-orm';
 import { DatabaseService } from 'src/database/database.service';
-import { InsertProject, projectsTable } from 'src/database/schema';
+import {
+  InsertProject,
+  projectsTable,
+  SelectProject,
+} from 'src/database/schema';
 import { UserService } from 'src/user/user.service';
 import { CreateProjectDto } from './dto/create-project.dto';
-import { eq } from 'drizzle-orm';
 
 @Injectable()
 export class ProjectsService {
@@ -12,6 +16,15 @@ export class ProjectsService {
     private dbService: DatabaseService,
     private userService: UserService,
   ) {}
+
+  async getProjectById(user: AccessTokenDecoded, id: string) {
+    const { id: userId } = await this.userService.findOneByEmail(user.email);
+    const result = await this.dbService.db
+      .select()
+      .from(projectsTable)
+      .where(and(eq(projectsTable.id, id), eq(projectsTable.userId, userId)));
+    return result[0] as SelectProject;
+  }
 
   async getProjects(user: AccessTokenDecoded) {
     const { id: userId } = await this.userService.findOneByEmail(user.email);
