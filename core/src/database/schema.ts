@@ -2,17 +2,20 @@ import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 export const projectsTable = sqliteTable('projects', {
-  id: integer('id').primaryKey(),
+  id: text('id').primaryKey(),
   name: text('name').notNull(),
   description: text('description'),
+  userId: text('user_id')
+    .notNull()
+    .references(() => usersTable.id, { onDelete: 'cascade' }),
 });
 
 export const tasksTable = sqliteTable('tasks', {
-  id: integer('id').primaryKey(),
+  id: text('id').primaryKey(),
   title: text('title').notNull(),
   description: text('description').notNull(),
   dueDate: text('due_date').notNull(),
-  projectId: integer('project_id')
+  projectId: text('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
   createdAt: text('created_at')
