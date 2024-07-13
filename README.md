@@ -7,7 +7,7 @@ NEXT_PUBLIC_TOKEN_NAME=<name of the cookie where token will be set>
 ```
 
 ### Core (Nest)
-Database: Turso SQLITE
+Database: [Turso](https://docs.turso.tech/introduction) SQLITE.
 ```
 TURSO_CONNECTION_URL=<turso database connection url>
 TURSO_AUTH_TOKEN=<turso auth token>
