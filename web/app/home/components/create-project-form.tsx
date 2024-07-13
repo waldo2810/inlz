@@ -34,6 +34,7 @@ export default function CreateProjectForm() {
         message: response.message,
       });
     }
+    form.reset();
   }
 
   return (

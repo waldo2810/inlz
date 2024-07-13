@@ -13,7 +13,7 @@ export default async function Index() {
       <h1 className="text-2xl font-bold">Projects & Tasks</h1>
       <p>Welcome back</p>
       <Button variant="ghost">
-        <Link href="/home">Go home</Link>
+        <Link href="/home">Go to my projects</Link>
       </Button>
     </main>
   );

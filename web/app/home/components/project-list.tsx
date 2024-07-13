@@ -18,7 +18,7 @@ export default function ProjectList({ projects }: ProjectListProps) {
     <div className="my-8 grid grid-cols-3 gap-3">
       {projects.map((project: Project) => (
         <Card className="max-w-96 hover:bg-secondary/50">
-          <Link href={`${"/projects/1"}`}>
+          <Link href={`${"/projects"}/${project.id}`}>
             <CardHeader>
               <CardTitle>{project.name}</CardTitle>
               <CardDescription>Project description</CardDescription>
