@@ -7,11 +7,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import CreateProjectForm from "./create-project-form";
+import { Plus } from "lucide-react";
 
 export default function CreateProjectButton() {
   return (
     <Sheet>
-      <SheetTrigger className="bg-accent text-foreground py-3 px-4 rounded-md">
+      <SheetTrigger className="bg-foreground text-background hover:bg-foreground/90 h-9 rounded-md px-3 rounded-md flex items-center justify-between gap-2 text-sm">
+        <Plus size={16} />
         Create project
       </SheetTrigger>
       <SheetContent>

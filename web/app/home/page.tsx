@@ -6,9 +6,9 @@ export default async function Home() {
   const projects = await getProjects();
 
   return (
-    <main className="flex min-h-screen flex-col p-24">
-      <div className="flex justify-between">
-        <h2 className="text-xl font-semibold">My Projects</h2>
+    <main className="flex min-h-screen flex-col">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-semibold">My Projects</h2>
 
         <CreateProjectButton />
       </div>
