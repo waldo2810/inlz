@@ -41,7 +41,6 @@ export class AuthController {
       throw new BadRequestException('Token not found in authorization header');
     }
     const decoded = await this.authService.decode(token);
-    console.log({ authHeader, decoded });
     return decoded;
   }
 }

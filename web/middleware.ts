@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const protectedRoutes = ["/", "/home"];
-
 async function decodedToken(token: string) {
   const res = await fetch("http://localhost:8080/auth/decode", {
     headers: { Authorization: `Bearer ${token}` },
@@ -11,19 +9,29 @@ async function decodedToken(token: string) {
 }
 
 export async function middleware(request: NextRequest) {
-  const url = request.nextUrl.clone();
-
-  const cookie = request.cookies.get(process.env.NEXT_PUBLIC_TOKEN as string);
+  const pathname = request.nextUrl.pathname;
+  const cookie = request.cookies.get(process.env.TOKEN_NAME as string);
   const token = cookie?.value;
 
-  if (!token || (!token && protectedRoutes.includes(url.pathname))) {
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
+  if (!token) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  const user = await decodedToken(token as string);
-  if (user.exp < Date.now() / 1000) {
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
+  if (token) {
+    const user = await decodedToken(token as string);
+
+    if (user.exp < Date.now() / 1000) {
+      console.log("token and expired");
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    if (pathname === "/login") {
+      console.log("token and valid, go home");
+      return NextResponse.redirect(new URL("/home", request.url));
+    }
   }
 }
+
+export const config = {
+  matcher: ["/", "/home", "/projects", "/login"],
+};
